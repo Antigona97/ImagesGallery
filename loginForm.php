@@ -19,6 +19,7 @@
     $("document").ready(function(){
         $("#loginButton").click(function(){
             var data=$('.login-form').serialize();
+            alert(data);
             $.ajax({
                 url:"loginUser.php",
                 method: 'POST',

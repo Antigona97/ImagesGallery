@@ -40,12 +40,13 @@ $('document').ready(function(){
         url:'registerUser.php',
         method:'POST',
         data: data,
-        success: function(data){
-           window.location="loginForm.php";
-        },
-        error: function () {
-           alert("Errorrr");
-       } 
+        success: function(result){
+           if(result==""){
+			   window.location.href("loginForm.php");
+		   } else {
+			   alert(result);
+		   }
+		}
     });
  });
 });
