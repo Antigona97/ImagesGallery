@@ -1,26 +1,32 @@
 <?php
-   include "pdo_connection.php";
-   $username=isset($_POST['username']);
-   $password=isset($_POST['password']);
+   session_start();
+   include_once "pdo_connection.php";
 
-if(isset($_POST['submit'])){
-
-    if(!empty($username)&& !empty($password)){
-
-       $passwordHash=password_hash($password, PASSWORD_BCRYPT, array("cost" => 12));
-       $query="Select userId from users where username= :username and password= :password";
+   $username=isset($_POST['username'])?$_POST['username']:'';
+   $password=isset($_POST['password'])?$_POST['password']:'';
+if(!empty($username)&& !empty($password)){
+      //returns password and status of the user logged in
+       $query="Select password, status from users where username= :username LIMIT 1";
        $stmt=$pdo->prepare($query);
        $stmt->bindValue(':username', $username);
-       $stmt->bindValue(':password', $passwordHash);
        $stmt->execute();
-       $no_row_count=$stmt->rowCount();
-       if($no_row_count>0){
-          header("Location: home.html");
-       } else{
-         alert("Please verify your username or password!");
-       }
-   }
-} else {
-    echo "hi";
-}
+       $user=$stmt->fetch();
+       $no_of_rows=$stmt->rowCount();
+       //controls if exists a user with that username and if the account is verified
+        if($no_of_rows>0){
+            if($user['status']==1) {
+                //controls if passwords match
+                if(!empty($user['password']) && password_verify($password, $user['password'])){
+                  header("Location: home.html");
+                } else{
+                  header("Location: loginForm.php?field=password&message=Password is not valid");
+                }
+            } else {
+              header("Location: loginForm.php?field=password&message=Account is not verified");
+            }
+        } else{
+          header("Location: loginForm.php?field=username&message=This username does not exists");
+        }
+} else
+    echo "Please enter username and password!";
 ?>
