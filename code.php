@@ -13,7 +13,7 @@
        $res=$stmt->rowCount();
        if($res>0){
            if(!empty($results['maxtime']) && $results['maxtime']>date('Y-m-d',time())){
-               updateUserVerified($code, $username, $pdo);
+               updateUserVerified($code, $pdo);
            } else {
                header("Location: codeForm.php?field=code&message=This code has expired");
            }

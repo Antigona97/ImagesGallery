@@ -1,6 +1,3 @@
- {
-  box-sizing: border-box;
-}
 
 /* Position the image container (needed to position the left and right arrows) */
 .container {
@@ -83,4 +80,10 @@
 .active,
 .demo:hover {
   opacity: 1;
+}
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
 }

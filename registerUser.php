@@ -1,5 +1,4 @@
 <?php
-session_start();
 include "pdo_connection.php";
 require 'PHPMailer-master/src/PHPMailer.php';
 require 'PHPMailer-master/src/SMTP.php';
@@ -12,7 +11,6 @@ $cpassword=isset($_POST['cpassword'])?$_POST['cpassword']:'';
 
 $hash=password_hash($password, PASSWORD_BCRYPT, array("cost" => 12));
 $passwordHash=substr( $hash, 0, 60 );
-$_SESSION['username']=$username;
 $expires=(time()+24*3600); //time when expires verification code 24 hours
 
 if(!empty($username) && !empty($email) && !empty($password) &&  !empty($cpassword)){

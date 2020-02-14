@@ -6,7 +6,7 @@
    $password=isset($_POST['password'])?$_POST['password']:'';
 if(!empty($username)&& !empty($password)){
       //returns password and status of the user logged in
-       $query="Select password, status from users where username= :username LIMIT 1";
+       $query="Select * from users where username= :username LIMIT 1";
        $stmt=$pdo->prepare($query);
        $stmt->bindValue(':username', $username);
        $stmt->execute();
@@ -17,7 +17,8 @@ if(!empty($username)&& !empty($password)){
             if($user['status']==1) {
                 //controls if passwords match
                 if(!empty($user['password']) && password_verify($password, $user['password'])){
-                  header("Location: home.html");
+                  $_SESSION['userId']=$user['userId'];
+                  header("Location: albumsForm.php");
                 } else{
                   header("Location: loginForm.php?field=password&message=Password is not valid");
                 }
