@@ -2,22 +2,23 @@
 session_start();
   include "pdo_connection.php";
 $valid_extensions = array('jpeg', 'jpg', 'png', 'gif', 'bmp' , 'pdf' , 'doc' , 'ppt');
+$folderId=$_SESSION['folderId'];
 $folderName=$_SESSION['folderName'];
 $filename=isset($_FILES["image"]["name"])?$_FILES["image"]["name"]: '';
 $location = "images/$folderName/".$filename;
 $dir="images/$folderName";
 if(isset($_POST["upload"])){
    if(is_dir($dir)){
-     uploadImage($pdo, $valid_extensions, $folderName, $filename, $location);
+     uploadImage($pdo, $valid_extensions, $folderId, $filename, $location);
    } else {
      mkdir($dir);
-     uploadImage($pdo, $valid_extensions, $folderName, $filename, $location);
+     uploadImage($pdo, $valid_extensions, $folderId, $filename, $location);
    }
 } else {
-   echo "Errorrrr";
+   getImage($pdo, $folderId);
 }
-function uploadImage($pdo, $valid_extensions, $folderName, $filename, $location){
-   $query="INSERT INTO images(path, filename) VALUES (?, ?) ";
+function uploadImage($pdo, $valid_extensions, $folderId, $filename, $location){
+   $query="INSERT INTO images(path, filename, folderId) VALUES (?, ?, ?) ";
    $stmt=$pdo->prepare($query);
    $tmp=$_FILES["image"] ["tmp_name"];
    // get uploaded file's extension
@@ -29,22 +30,23 @@ function uploadImage($pdo, $valid_extensions, $folderName, $filename, $location)
      if(move_uploaded_file($tmp,$location)) 
      { 
       //insert form data in the database
-      $stmt->execute(array($location, $filename));
-      echo "<img src='$location' class='center'; />";
+      $stmt->execute(array($location, $filename, $folderId));
      }
    } else {
    echo 'invalid';
    }
 }
-/*function getImage($pdo) {
-   $qry="Select path from images where";
+function getImage($pdo, $folderId) {
+   $qry="Select path from images where folderId= :folderId";
    $stmt=$pdo->prepare($qry);
-   $stmt->execute();
+   $stmt->execute(':folderId', $folderId);
    while( $arr=$stmt->fetch()){
       if(!$arr) exit('No images in the folder');
-      $path=$arr['path']; 
-      echo "<img src='$path' class='center' />";
+      else {
+         $path=$arr['path']; 
+         echo "<img src='$path' class='center' width='100px' />";
+      }
    }
    $stmt = null;
-}*/
+}
 ?>

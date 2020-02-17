@@ -87,3 +87,19 @@
   margin-right: auto;
   width: 50%;
 }
+:root {
+  --jumbotron-padding-y: 3rem;
+}
+
+.jumbotron {
+  padding-top: var(--jumbotron-padding-y);
+  padding-bottom: var(--jumbotron-padding-y);
+  margin-bottom: 0;
+  background-color: #fff;
+}
+.card {
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+  transition: 0.3s;
+  border-radius: 5px; /* 5px rounded corners */
+}
+.box-shadow { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }
