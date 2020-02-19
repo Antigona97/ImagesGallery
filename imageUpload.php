@@ -1,21 +1,20 @@
-<?php
-session_start();
-  include "pdo_connection.php";
-$valid_extensions = array('jpeg', 'jpg', 'png', 'gif', 'bmp' , 'pdf' , 'doc' , 'ppt');
+<?php session_start();
+include "pdo_connection.php"; 
+$folderName= $_SESSION['folderName'];
 $folderId=$_SESSION['folderId'];
-$folderName=$_SESSION['folderName'];
 $filename=isset($_FILES["image"]["name"])?$_FILES["image"]["name"]: '';
+$valid_extensions = array('jpeg', 'jpg', 'png', 'gif', 'bmp' , 'pdf' , 'doc' , 'ppt');
 $location = "images/$folderName/".$filename;
 $dir="images/$folderName";
 if(isset($_POST["upload"])){
    if(is_dir($dir)){
      uploadImage($pdo, $valid_extensions, $folderId, $filename, $location);
+     makeThumbnail($pdo, $location, $filename);
    } else {
      mkdir($dir);
      uploadImage($pdo, $valid_extensions, $folderId, $filename, $location);
-   }
-} else {
-   getImage($pdo, $folderId);
+     makeThumbnail($pdo, $location, $filename);
+    }
 }
 function uploadImage($pdo, $valid_extensions, $folderId, $filename, $location){
    $query="INSERT INTO images(path, filename, folderId) VALUES (?, ?, ?) ";
@@ -36,17 +35,20 @@ function uploadImage($pdo, $valid_extensions, $folderId, $filename, $location){
    echo 'invalid';
    }
 }
-function getImage($pdo, $folderId) {
-   $qry="Select path from images where folderId= :folderId";
-   $stmt=$pdo->prepare($qry);
-   $stmt->execute(':folderId', $folderId);
-   while( $arr=$stmt->fetch()){
-      if(!$arr) exit('No images in the folder');
-      else {
-         $path=$arr['path']; 
-         echo "<img src='$path' class='center' width='100px' />";
-      }
-   }
-   $stmt = null;
+function makeThumbnail($pdo,$location, $filename){
+  $destination="images/thumbnail/$filename";
+  $desired_width="200";
+  $source_image=imagecreatefromjpeg($location);
+  $width = imagesx($source_image);
+  $height = imagesy($source_image);
+  $desired_height = floor($height * ($desired_width / $width));
+  $virtual_image = imagecreatetruecolor($desired_width, $desired_height);
+  imagecopyresampled($virtual_image, $source_image, 0, 0, 0, 0, $desired_width, $desired_height, $width, $height);
+  imagejpeg($virtual_image, $destination);
+  $query="INSERT INTO thumbnails(thumbnailName, thumbnailPath) VALUES (:thumbnailName, :thumbnailPath) ";
+   $stmt=$pdo->prepare($query);
+   $stmt->bindValue(':thumbnailName', $filename);
+   $stmt->bindValue(':thumbnailPath', $destination);
+   $stmt->execute();
 }
 ?>
