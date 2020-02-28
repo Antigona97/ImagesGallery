@@ -3,7 +3,6 @@
 .container {
   position: relative;
 }
-
 /* Hide the images by default */
 .mySlides {
   display: none;
@@ -103,3 +102,6 @@
   border-radius: 5px; /* 5px rounded corners */
 }
 .box-shadow { box-shadow: 0 .25rem .75rem rgba(0, 0, 0, .05); }
+.hided {
+  display:none;
+}

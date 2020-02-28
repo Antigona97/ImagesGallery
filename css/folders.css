@@ -73,3 +73,12 @@ h1 {
   background-color: #666;
    color: white;
 }
+.dialogBoxes
+{
+  display:none;
+}
+.ui-widget-header{
+  margin:5px 0;
+  padding:5px;
+  cursor:pointer;
+}

@@ -1,8 +1,5 @@
 <?php
 include "pdo_connection.php";
-require 'PHPMailer-master/src/PHPMailer.php';
-require 'PHPMailer-master/src/SMTP.php';
-require_once 'PHPMailer-master/src/Exception.php';
 
 $username=isset($_POST['username'])?$_POST['username']:'';
 $email=isset($_POST['email'])?$_POST['email']:'';
@@ -14,15 +11,13 @@ $passwordHash=substr( $hash, 0, 60 );
 $expires=(time()+24*3600); //time when expires verification code 24 hours
 
 if(!empty($username) && !empty($email) && !empty($password) &&  !empty($cpassword)){
-    $query_e="Select * from users where email= :email";
+    $query_e="Select * from users where email=?";
     $stmt=$pdo->prepare($query_e);
-    $stmt->bindValue(':email', $email);
-    $stmt->execute();
+    $stmt->execute(array($email));
     $res_e=$stmt->rowCount();
-    $query_u="Select * from users where username= :username";
+    $query_u="Select * from users where username=?";
     $stmt_u=$pdo->prepare($query_u);
-    $stmt_u->bindValue(':username', $username);
-    $stmt_u->execute();
+    $stmt_u->execute(array($username));
     $res_u=$stmt_u->rowCount();
     if($res_e>0){
         header("Location: registerForm.php?field=email&message=This email exists");
@@ -38,35 +33,14 @@ if(!empty($username) && !empty($email) && !empty($password) &&  !empty($cpasswor
  else {
      echo "Error";
 }
-
-function sendVerificationEmail ($email, $code){
-    $mail=new PHPMailer\PHPMailer\PHPMailer();
-    $mail->isSMTP();
-    $mail->Host = 'smtp.gmail.com';
-    $mail->SMTPAuth = true;
-    $mail->Username="email";
-    $mail->Password="password";
-    $mail->SMTPSecure = 'tls';
-    $mail->Port = 587; 
-    $mail->setFrom('antigonakoka@gmail.com');
-    $mail->addAddress($email);
-    $mail->isHTML(true);
-    $mail->Body="Please verify your account with the code ".$code;
-    $mail->send();
-}
 function registerUser($username, $email, $passwordHash, $expires, $pdo) {
     $code=substr(md5(mt_rand()), 0, 4);
-    $sql="Insert into users(username, email, password, confirmPassword, code, maxtime) values (:username, :email, :password, :confirmPassword, :code, :maxtime)";
+    $maxtime=date('Y-m-d',$expires);
+    $sql="Insert into users(username, email, password, confirmPassword, code, maxtime) values (?,?,?,?,?,?)";
     $stmt=$pdo->prepare($sql);
-    $stmt->bindValue(':username', $username);
-    $stmt->bindValue(':email', $email);
-    $stmt->bindValue(':password', $passwordHash);
-    $stmt->bindValue(':confirmPassword', $passwordHash);
-    $stmt->bindValue(':code', $code);
-    $stmt->bindValue(':maxtime', date('Y-m-d',$expires));
-    $result=$stmt->execute();
+    $result=$stmt->execute(array($username,$email,$passwordHash,$passwordHash,$code,$maxtime));
     if ($result) {
-        sendVerificationEmail($email, $code);
+        include "verificationCode.php";
         header("Location: codeForm.php");
 
     } else {
