@@ -11,7 +11,7 @@ require_once 'PHPMailer-master/src/Exception.php';
     $mail->Password="password";
     $mail->SMTPSecure = 'tls';
     $mail->Port = 587; 
-    $mail->setFrom('antigonakoka@gmail.com');
+    $mail->setFrom('email');
     $mail->addAddress($email);
     $mail->isHTML(true);
     $mail->Body="Please verify your account with the code ".$code;
