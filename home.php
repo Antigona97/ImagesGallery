@@ -80,7 +80,7 @@ $(document).ready(function(){
             activeImage(); //removes active image from carousel
             $.ajax({
                 url:"imageUpload.php",
-                method:'GET',
+                method:'POST',
                 data: {'imageId': imageId, 'delete': $(this).val()},
                 success: function(){
                     window.location.reload();
@@ -89,12 +89,12 @@ $(document).ready(function(){
         }
     });
     $("#hideButton").click(function(){
-        activeImage(); //removes active image from carousel
         var imageId=$('div.active').attr('id'); //gets id of active image
+        activeImage(); //removes active image from carousel
         var hidden=window.location.search.split('=')[3]; //gets hidden parameter value from url
         $.ajax({
             url:"imageUpload.php",
-            method:'GET',
+            method:'POST',
             data: {'imageId': imageId, 'hide': $(this).val(),'hidden':hidden},
             success: function(){
                window.location.reload();

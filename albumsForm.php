@@ -127,7 +127,7 @@ $(document).ready(function(){
             url: "editAlbum.php",
             method:'POST',
             data:{'folderId':button, 'hide':hide, 'hidden': hidden},
-            success: function(result){
+            success: function(){
                 window.location.reload();
             }
         });

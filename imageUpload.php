@@ -16,8 +16,8 @@ if(isset($_POST["upload"])){ //if the upload button is clicked
      makeThumbnail($pdo, $location, $filename, $folderId);
     } header("Location: home.php?folder_name=$folderName&folderId=$folderId"); //redirects to home.php
 }
-if(isset($_GET["delete"]) && isset($_GET['imageId'])){ //controls if the delete button is clicked
-  $imageId=$_GET['imageId'];
+if(isset($_POST["delete"]) && isset($_POST['imageId'])){ //controls if the delete button is clicked
+  $imageId=$_POST['imageId'];
   $query="Select filename from images where imageId=?;";
   $stmt = $pdo->prepare($query);
   $stmt->execute(array($imageId));
@@ -40,9 +40,9 @@ if(isset($_GET["delete"]) && isset($_GET['imageId'])){ //controls if the delete 
   } 
   $stmt=null;
 }
-if(isset($_GET['hide']) && isset($_GET['imageId'])){  
-  $hidden = (isset($_GET['hidden']) && (int)$_GET['hidden'] === 1)?0:1; //gets hidden parameter value from url
-  $imageId=$_GET['imageId'];
+if(isset($_POST['hide']) && isset($_POST['imageId'])){  
+  $hidden = (isset($_POST['hidden']) && (int)$_POST['hidden'] === 1)?0:1; //gets hidden parameter value from url
+  $imageId=$_POST['imageId'];
   $query="Update images set hide=? where imageId=?";
   $stmt = $pdo->prepare($query);
   $stmt->execute(array($hidden,$imageId));
