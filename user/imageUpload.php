@@ -1,5 +1,5 @@
 <?php session_start();
-include "pdo_connection.php"; 
+include ('../pdo_connection.php'); 
 $folderName= $_SESSION['folderName'];
 $folderId=$_SESSION['folderId'];
 $filename=isset($_FILES["image"]["name"])?$_FILES["image"]["name"]: ''; //gets all files from form

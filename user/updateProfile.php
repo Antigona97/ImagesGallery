@@ -1,5 +1,5 @@
 <?php session_start();
-include 'pdo_connection.php';
+include ('../pdo_connection.php');
 $userId=$_SESSION['userId'];
 $username =isset($_POST['username'])?$_POST['username']:'';
 $email =isset($_POST['email'])?$_POST['email']:'';
@@ -24,7 +24,7 @@ if (!empty($username) && !empty($email) && !empty($currentPassword) && !empty($n
         $stmt->bindValue(':confirmPassword', $passwordHash);
         $stmt->bindValue(':userId', $userId);
         $stmt->execute();
-        header("Location: logout.php");
+        header("Location: ../logout.php");
     }
     else header("Location: profile.php?field=currentPassword&message=Your current password is not correct");
   }

@@ -1,6 +1,6 @@
 <?php
 session_start();
-include "pdo_connection.php";
+include ('../pdo_connection.php');
 if(isset($_SESSION['userId'])) {
     $userId=$_SESSION['userId'];
 ?> 
@@ -25,6 +25,9 @@ if(isset($_SESSION['userId'])) {
         <div class="col-md-5">
             <strong>Album :</strong>
             <input type="text" id="nameInput" name="album" class="form-control" placeholder="Album name">
+            <?php  if(isset($_GET['field']) && $_GET['field']==='album'){
+                       echo '<p class="text-danger">'.$_GET["message"].'</p>';
+            }?>
             <p class="result"></p>
         </div>
         <div class="col-md-5">
@@ -33,19 +36,13 @@ if(isset($_SESSION['userId'])) {
            <a class="btn btn-success" id="hidedAlbums" href="albumsForm.php?hidden=<?php echo 1;?>">Hided albums</a>
         </div>
         <div>
-            <!--Begin my header.php include -->
-            <br/>
-               <?php include "header.php"; ?>
-            <!-- End my header.php include -->
-        </div>
-        <div>
           <?php 
             //get album name, creates folder and instert into database
             $folderName=isset($_GET['album'])?$_GET['album']: '';
             $dir="images/$folderName";
             if(isset($_GET['submitButton'])){
                 if(is_dir($dir)){ //control if this folder exists 
-                    echo '<p>This album exists</>'; 
+                    header("Location: albumsForm.php?field=album&message=This album exists");
                 } 
                 else {
                     mkdir($dir); //creates the folder
@@ -53,6 +50,12 @@ if(isset($_SESSION['userId'])) {
                 }
             }
           ?>
+        </div>
+        <div>
+            <!--Begin my header.php include -->
+            <br/>
+               <?php include ('../header.php'); ?>
+            <!-- End my header.php include -->
         </div>
     </div>
 </form>
@@ -90,8 +93,8 @@ $(document).ready(function(){
             $('.result').html("Please fill the name of the album");
         } else  {
            $.ajax({
-               url:"albumsForm.php",
-               method:'GET',
+               url:"user/albumsForm.php",
+               method:'POST',
                data:{album:album},
                success: function(){
                 window.location.reload();

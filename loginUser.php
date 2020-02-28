@@ -17,7 +17,7 @@
           if(!empty($user['password']) && password_verify($password,$user['password'])){
             $_SESSION['userId']=$user['userId'];
             if($user['status']==1){
-              header("Location: albumsForm.php?hidden=0");
+              header("Location: user/albumsForm.php?hidden=0");
             } else {
               header("Location: loginForm.php?field=verify&message=Account is not verified&email=$email");
             }

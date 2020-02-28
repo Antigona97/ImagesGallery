@@ -1,5 +1,5 @@
 <?php
-    include "pdo_connection.php";
+    include ('../pdo_connection.php');
     $slider_html='';
     $thumb_html = '';
     $button_html='';

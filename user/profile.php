@@ -1,5 +1,5 @@
 <?php session_start();
-include "pdo_connection.php";
+include ('../pdo_connection.php');
 if(isset($_SESSION['userId'])) {
     $userId=$_SESSION['userId'];
     $query="Select * from users where userId=:userId";
@@ -27,7 +27,7 @@ if(isset($_SESSION['userId'])) {
 <div class="container">
     <h1>Edit Profile</h1>
     <!--Begin my header.php include -->
-        <?php include "header.php"; ?>
+        <?php include ('../header.php'); ?>
     <!-- End my header.php include -->
   	<hr>
 	<div class="row">
@@ -104,6 +104,6 @@ if(isset($_SESSION['userId'])) {
 </html>
 <?php }
   else {
-      header("location: loginForm.php");
+      header("location: '../loginForm.php'");
   }
 ?>

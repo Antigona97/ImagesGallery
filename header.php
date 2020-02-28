@@ -6,6 +6,6 @@
     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
         <a class="dropdown-item" href="albumsForm.php?hidden=0">Gallery</a>
         <a class="dropdown-item" href="profile.php">Profile</a>
-        <a class="dropdown-item" href="logout.php">Logout</a>
+        <a class="dropdown-item" href="../logout.php">Logout</a>
     </div>
     </div>

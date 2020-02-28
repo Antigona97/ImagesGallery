@@ -18,7 +18,7 @@
                         echo '<p class="text-danger" class="response">'.$_GET['message'].'</p>';
                     } else if(isset($_GET['field']) && $_GET['field']==='verify'){
                         echo '<p class="generateCodeLink">'.$_GET['message'].'
-                             <a id="v" href="codeForm.php">Generate a new code</a></p>'; //displays error from server
+                             <a id="verifyLink" href="codeForm.php">Generate a new code</a></p>'; //displays error from server
                     }?>
                 <button type="button" name="submitButton" id="loginButton">login</button>
                 <p class="message">Not registered? <a href="registerForm.php">Create an account</a></p>
@@ -38,7 +38,7 @@
             }
         });
     });
-        $('#v').click(function(){
+        $('#verifyLink').click(function(){
             var email=window.location.search.split('=')[3];
             console.log(email);
             $.ajax({

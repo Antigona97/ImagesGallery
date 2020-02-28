@@ -1,5 +1,5 @@
 <?php
-   include "pdo_connection.php";
+   include ('../pdo_connection.php');
    
    if(isset($_POST['name'])){ //updates name of the album
       $folderName=$_POST['name'];

@@ -1,5 +1,5 @@
 <?php session_start();
-    include "pdo_connection.php";
+    include ('../pdo_connection.php');
     $userId=$_SESSION['userId'];
 
     $albumName=isset($_POST['albumName'])?$_POST['albumName']:'';

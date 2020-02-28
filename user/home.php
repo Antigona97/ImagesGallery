@@ -1,5 +1,5 @@
 <?php session_start();
-include "slider.php";
+include ('slider.php');
 if(isset($_SESSION['userId'])){
     
     $folderName=(isset($_GET['folder_name']))?$_GET['folder_name']:'';
@@ -35,7 +35,7 @@ if(isset($_SESSION['userId'])){
             <div>
                <!--Begin my header.php include -->
                <br/>
-                 <?php include "header.php"; ?>
+                 <?php include ('../header.php'); ?>
                <!-- End my header.php include -->
             </div>
         </div>
