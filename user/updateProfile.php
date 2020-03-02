@@ -18,12 +18,7 @@ if (!empty($username) && !empty($email) && !empty($currentPassword) && !empty($n
     if(password_verify($currentPassword, $row['password'])){
         $query="UPDATE users SET username=:username, email=:email, password=:newPassword, confirmPassword=:confirmPassword where userId=:userId";
         $stmt=$pdo->prepare($query);
-        $stmt->bindValue(':username', $username);
-        $stmt->bindValue(':email', $email);
-        $stmt->bindValue(':newPassword', $passwordHash);
-        $stmt->bindValue(':confirmPassword', $passwordHash);
-        $stmt->bindValue(':userId', $userId);
-        $stmt->execute();
+        $stmt->execute(array($username, $email, $passwordHash, $passwordHash, $userId));
         header("Location: ../logout.php");
     }
     else header("Location: profile.php?field=currentPassword&message=Your current password is not correct");

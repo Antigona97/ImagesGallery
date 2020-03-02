@@ -12,7 +12,7 @@ if(isset($_SESSION['userId'])){
 <!Doctype html>
 <html>
 <head>
-    <link href="css/image.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="../css/image.css" rel="stylesheet" type="text/css" media="all" />
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -46,9 +46,9 @@ if(isset($_SESSION['userId'])){
           <ol class="carousel-indicators"><?php echo $button_html; ?></ol> <!-- controls carousel-indicators -->
         </div> 
         <br/>
-        <div id="thumbnail" class="text-center" class="thumbnails">
+        <ul id="thumbnail" class="thumbnails-carousel clearfix">
             <?php echo $thumb_html; ?> <!-- displays thumbnails into carousel -->
-        </div>
+        </ul>
         <a class="carousel-control-prev" href="#carouselExampleIndicators" style='height:500px' role="button" data-slide="prev">
            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
            <span class="sr-only">Previous</span>
@@ -61,8 +61,9 @@ if(isset($_SESSION['userId'])){
     </form>
     <button name="hide" id="hideButton" class="btn btn-success">Hide</button>
     <button name="delete" id="deleteButton" class="btn btn-success">Delete</button>
-    <a name="hImage" type="button" id="hidenImages" class="btn btn-success" href="home.php?folder_name=<?php echo $folderName.'&folderId='.$folderId.'&hidden=1' ?>">Hiden images</a>
+    <a name="hImage" type="button" id="hidenImages" class="btn btn-success" href="carouselForm.php?folder_name=<?php echo $folderName.'&folderId='.$folderId.'&hidden=1' ?>">Hiden images</a>
 </div>
+<script src='../js/carousel-slider.js'></script>
 <script>
 $(document).ready(function(){
     $('#submitButton').click(function(){

@@ -44,10 +44,7 @@
             $.ajax({
                 url:"updateCode.php",
                 method:"POST",
-                data:{'email':email},
-                success: function(result){
-                    alert(result)
-                }
+                data:{'email':email}
             });
         });
     </script>

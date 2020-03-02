@@ -33,7 +33,7 @@ if(isset($_SESSION['userId'])) {
         <div class="col-md-5">
            <br/>
            <button type="submit" class="btn btn-success" name="submitButton" id="createAlbum">Create album</button>
-           <a class="btn btn-success" id="hidedAlbums" href="albumsForm.php?hidden=<?php echo 1;?>">Hided albums</a>
+           <a class="btn btn-success" id="hidedAlbums" href="albumsForm.php?hidden=1">Hided albums</a>
         </div>
         <div>
           <?php 

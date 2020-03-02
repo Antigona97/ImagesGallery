@@ -23,8 +23,8 @@ while( $arr=$stmt->fetch(PDO::FETCH_ASSOC)){
     $slider_html.="<div id='".$arr['imageId']."'  data-slide-number='$image_count' class='item carousel-item ".$active_class."'>
                    <img src='$path' class='d-block w-100' style='height:500px' class='rounded mx-auto d-block' class='center' alt='$filename'>
                    <div class='carousel-caption'></div></div>";
-    $thumb_html.= "<a href='#carouselExampleIndicators'  class='carousel-control' role='button' data-slide='$image_count' class='$active_class'>
-                    <img src='images/thumbnail/$filename' alt='$filename'></a>";
+    $thumb_html.= "<li data-slide='$image_count'>
+                    <img src='images/thumbnail/$filename' alt='$filename'></li>";
     $button_html.= "<li data-target='#carouselExampleIndicators' data-slide-to='$image_count' class='$active_class'></li>";
 }
     $stmt = null;

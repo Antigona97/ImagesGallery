@@ -14,7 +14,7 @@ if(isset($_POST["upload"])){ //if the upload button is clicked
      mkdir($dir); //create a new directory
      uploadImage($pdo, $valid_extensions, $folderId, $filename, $location);
      makeThumbnail($pdo, $location, $filename, $folderId);
-    } header("Location: home.php?folder_name=$folderName&folderId=$folderId"); //redirects to home.php
+    } header("Location: carouselForm.php?folder_name=$folderName&folderId=$folderId"); //redirects to carouselForm.php
 }
 if(isset($_POST["delete"]) && isset($_POST['imageId'])){ //controls if the delete button is clicked
   $imageId=$_POST['imageId'];

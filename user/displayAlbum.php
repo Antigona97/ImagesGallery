@@ -17,7 +17,7 @@
         $folderId=$row['folderId'];
         echo '<div class="col-md-4">
                 <div class="card">
-                  <a id="link" href="home.php?folder_name='.$folder.'&folderId='.$folderId.'&hidden=0"> 
+                  <a id="link" href="carouselForm.php?folder_name='.$folder.'&folderId='.$folderId.'&hidden=0"> 
                   <img class="card-img-top" src="images/thumbnail/'.$file.'" alt='.$folder.' border-radius: 5px 5px 0 0; style="height: 200px; width: 100%" data-holder-rendered="true">
                   </a>
                 <div class="card-body">'.$folder.'
